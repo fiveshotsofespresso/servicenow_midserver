@@ -31,7 +31,7 @@ class { 'servicenow_midserver':
   root_drive          => 'D:',
   servicenow_username => 'foo',
   servicenow_password => 'bar',
-  servicenow_url      => 'https://myinstance.service-now.com/"
+  servicenow_url      => 'https://myinstance.service-now.com/'
 }
 ```
 
