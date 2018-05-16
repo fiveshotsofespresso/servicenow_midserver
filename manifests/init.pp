@@ -10,12 +10,12 @@ class servicenow_midserver (
   String $root_drive,
   String $servicenow_username,
   String $servicenow_password,
-  Optional[Integer] $midserver_java_heap_max,
-  Optional[Integer] $midserver_max_threads,
-  Optional[String] $proxy_host,
-  Optional[String] $proxy_port,
-  Optional[String] $proxy_username,
-  Optional[String] $proxy_password,
+  Optional[Integer] $midserver_java_heap_max = undef,
+  Optional[Integer] $midserver_max_threads   = undef,
+  Optional[String] $proxy_host               = undef,
+  Optional[String] $proxy_port               = undef,
+  Optional[String] $proxy_username           = undef,
+  Optional[String] $proxy_password           = undef,
 ) {
 
   contain servicenow_midserver::download
