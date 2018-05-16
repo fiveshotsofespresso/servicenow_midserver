@@ -147,3 +147,9 @@ Only handles one MID Server per node.
 Password must be left unencrypted on the MID Server itself, or it will constantly be trying to overwrite the encrypted value. Password may, of course, still be encrypted through EYAML and unencrypted through a Hiera lookup in your manifest.
 
 The lifecycle of a ServiceNow MID Server is largely handled by ServiceNow once initially installed. Upgrades are orchestrated by ServiceNow and changes to the configuration file (like changing the maximum number of threads will stay in place).
+
+## Future
+
+* Add parameters and configuration for when MID Server sits behind proxy
+* Create defined type rather than a class so that multiple MID Servers can exist on one node
+* Figure out a way to allow encryption of the password on the MID Server itself
