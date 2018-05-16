@@ -42,6 +42,7 @@ class servicenow_midserver::config {
       attributes => {
         'value'  => $servicenow_midserver::servicenow_password,
         'secure' => 'false' # lint:ignore:quoted_booleans
+        'encrypt' => 'false' # lint:ignore:quoted_booleans
       },
     },
   }
