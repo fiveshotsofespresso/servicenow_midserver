@@ -1,9 +1,7 @@
-# A description of what this class does
+# Class: servicenow_midserver::config:  See README.md for documentation.
+# ===========================
 #
-# @summary A short summary of the purpose of this class
 #
-# @example
-#   include servicenow_midserver::config
 class servicenow_midserver::config {
 
   # The following xml_fragment resources manipulate the config.xml file. 

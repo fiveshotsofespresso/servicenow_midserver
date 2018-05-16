@@ -1,9 +1,7 @@
-# A description of what this class does
+# Class: servicenow_midserver::service:  See README.md for documentation.
+# ===========================
 #
-# @summary A short summary of the purpose of this class
 #
-# @example
-#   include servicenow_midserver::service
 class servicenow_midserver::service {
   service{'snc_mid':
     ensure => running

@@ -1,9 +1,7 @@
-# A description of what this class does
+# Class: servicenow_midserver::install:  See README.md for documentation.
+# ===========================
 #
-# @summary A short summary of the purpose of this class
 #
-# @example
-#   include servicenow_midserver::install
 class servicenow_midserver::install {
 
   exec {'Initiate ServiceNow Midserver':
