@@ -46,7 +46,7 @@ class { 'servicenow_midserver':
   servicenow_username     => 'foo',
   servicenow_password     => 'bar',
   midserver_java_heap_max => 4096,
-  midserver_max_threads   => 200
+  midserver_max_threads   => 200,
 }
 ```
 
@@ -71,11 +71,15 @@ The following parameters are available in the `servicenow_midserver` class:
 
 #### `midserver_source`
 
+Required.
+
 Data type: String.
 
 Specifies a URL that a MID Server ZIP file can be downloaded from
 
 #### `midserver_name`
+
+Required.
 
 Data type: String
 
@@ -83,11 +87,15 @@ Specifies the desired MID Server name
 
 #### `root_drive`
 
+Required.
+
 Data type: String
 
 Specifies the root drive to install the MID Server on
 
 #### `servicenow_url`
+
+Required.
 
 Data type: String
 
@@ -95,11 +103,15 @@ Specifies the URL of your ServiceNow instance
 
 #### `servicenow_username`
 
+Required.
+
 Data type: String.
 
 Specifies a username (assigned the mid_server role in ServiceNow) 
 
 #### `servicenow_username`
+
+Required.
 
 Data type: String.
 
@@ -116,6 +128,8 @@ Specifies the maximum size the heap of the JVM process running your MID Server c
 Default: 1024
 
 #### `midserver_max_threads`
+
+Optional.
 
 Data type: Integer
 
