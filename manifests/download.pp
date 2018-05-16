@@ -21,7 +21,7 @@ class servicenow_midserver::download {
     creates        => "${midserver_home}/agent",
     cleanup        => true,
     allow_insecure => true,
-    require        => File["${midserver_home}"],
+    require        => File[$midserver_home],
   }
 
 }
