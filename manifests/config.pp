@@ -58,6 +58,17 @@ class servicenow_midserver::config {
     },
   }
 
+  xml_fragment { 'ServiceNow Max Threads':
+    ensure  => 'present',
+    path    => "${config_home}/config.xml",
+    xpath   => "/parameters/parameter[@name='threads.max']",
+    content => {
+      attributes => {
+        'value' => $servicenow_midserver::midserver_max_threads,
+      },
+    },
+  }
+
   file_line { 'Set Java heap max':
     ensure => present,
     path   => "${config_home}/conf/wrapper-override.conf",

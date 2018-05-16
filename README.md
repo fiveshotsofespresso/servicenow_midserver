@@ -124,7 +124,7 @@ Optional.
 
 Data type: Integer.
 
-Specifies the maximum size the heap of the JVM process running your MID Server can grow to
+Specifies the maximum size the heap of the JVM process running your MID Server can grow to (in MB)
 
 Default: 1024
 
@@ -136,8 +136,12 @@ Data type: Integer
 
 Specifies a maximum number of threads your MID Server can handle at once
 
+Default: 25
+
 ## Limitations
 
 Compatible with Windows Server 2012 R2 and Windows Server 2016.
 
 Only handles one MID Server per node
+
+The lifecycle of a ServiceNow MID Server is largely handled by ServiceNow once initially installed. Upgrades are orchestrated by ServiceNow and changes to the configuration file (like changing the maximum number of threads will stay in place).
