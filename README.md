@@ -46,7 +46,7 @@ class { 'servicenow_midserver':
   root_drive              => 'D:',
   servicenow_username     => 'foo',
   servicenow_password     => 'bar',
-  servicenow_url          => 'https://myinstance.service-now.com/"
+  servicenow_url          => 'https://myinstance.service-now.com/",
   midserver_java_heap_max => 4096,
   midserver_max_threads   => 200,
 }
