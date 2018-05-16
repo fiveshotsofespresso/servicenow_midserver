@@ -1,4 +1,4 @@
-# Class: servicenow_midserver::install:  See README.md for documentation.
+# Class: servicenow_midserver::service:  See README.md for documentation.
 # ===========================
 #
 #
