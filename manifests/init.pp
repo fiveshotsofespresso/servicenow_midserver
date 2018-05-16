@@ -8,6 +8,7 @@ class servicenow_midserver (
   String $midserver_source,
   String $midserver_name,
   String $root_drive,
+  String $servicenow_url,
   String $servicenow_username,
   String $servicenow_password,
   Optional[Integer] $midserver_java_heap_max = undef,
