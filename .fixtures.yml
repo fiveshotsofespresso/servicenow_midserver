@@ -3,4 +3,4 @@
 ---
 fixtures:
   forge_modules:
-#     stdlib: "puppetlabs/stdlib"
+     xml_fragment: "ianoberst/xml_fragment"

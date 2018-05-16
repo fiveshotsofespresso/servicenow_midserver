@@ -1,16 +1,6 @@
 
 # servicenow_midserver
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
-
-
-
-
-
-
 #### Table of Contents
 
 1. [Description](#description)
@@ -21,61 +11,132 @@ The README template below provides a starting point with details about what info
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what problem it solves. This is your 30-second elevator pitch for your module. Consider including OS/Puppet version it works with.
-
-You can give more descriptive information in a second paragraph. This paragraph should answer the questions: "What does this module *do*?" and "Why would I use it?" If your module has a range of functionality (installation, configuration, management, etc.), this is the time to mention it.
+This module configures and installs a ServiceNow MID Server on Windows 2012 R2 and Windows 2016 servers
 
 ## Setup
 
-### What servicenow_midserver affects **OPTIONAL**
+### Setup Requirements
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+The servicenow_midserver module requires the [ianoberst-xml_fragment module](https://forge.puppet.com/ianoberst/xml_fragment) (version 1.0.2)
 
 ### Beginning with servicenow_midserver
 
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+```puppet
+class { 'servicenow_midserver':
+  midserver_source    => 'https://install.service-now.com/glide/distribution/builds/package/mid/2018/03/19/mid.istanbul-09-23-2016__patch11a-03-13-2018_03-19-2018_0958.windows.x86-64.zip',
+  midserver_name      => 'Discovery_MID1',
+  root_drive          => 'D:',
+  servicenow_username => 'foo',
+  servicenow_password => 'bar',
+}
+```
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the fancy stuff with your module here. It's especially helpful if you include usage examples and code samples for doing things with your module.
+### Specify java heap max or max threads
+
+```puppet
+class { 'servicenow_midserver':
+  midserver_source        => 'https://install.service-now.com/glide/distribution/builds/package/mid/2018/03/19/mid.istanbul-09-23-2016__patch11a-03-13-2018_03-19-2018_0958.windows.x86-64.zip',
+  midserver_name          => 'Discovery_MID1',
+  root_drive              => 'D:',
+  servicenow_username     => 'foo',
+  servicenow_password     => 'bar',
+  midserver_java_heap_max => 4096,
+  midserver_max_threads   => 200,
+}
+```
 
 ## Reference
 
-Users need a complete list of your module's classes, types, defined types providers, facts, and functions, along with the parameters for each. You can provide this list either via Puppet Strings code comments or as a complete list in the README Reference section.
+### Classes
 
-* If you are using Puppet Strings code comments, this Reference section should include Strings information so that your users know how to access your documentation.
+#### Public classes
 
-* If you are not using Puppet Strings, include a list of all of your classes, defined types, and so on, along with their parameters. Each element in this listing should include:
+* servicenow_midserver: Main class, includes all other classes.
 
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+#### Private classes
+
+* servicenow_midserver::download: Handles downloading the MID Server ZIP and extracting it to the right location.
+* servicenow_midserver::config: Handles the MID Server configuration file.
+* servicenow_midserver::install: Handles the installation of the MID Server.
+* servicenow_midserver::service: Handles the MID Server service.
+
+### Parameters
+
+The following parameters are available in the `servicenow_midserver` class:
+
+#### `midserver_source`
+
+Required.
+
+Data type: String.
+
+Specifies a URL that a MID Server ZIP file can be downloaded from
+
+#### `midserver_name`
+
+Required.
+
+Data type: String
+
+Specifies the desired MID Server name
+
+#### `root_drive`
+
+Required.
+
+Data type: String
+
+Specifies the root drive to install the MID Server on
+
+#### `servicenow_url`
+
+Required.
+
+Data type: String
+
+Specifies the URL of your ServiceNow instance
+
+#### `servicenow_username`
+
+Required.
+
+Data type: String.
+
+Specifies a username (assigned the mid_server role in ServiceNow) 
+
+#### `servicenow_username`
+
+Required.
+
+Data type: String.
+
+Specifies the password associated with the user defined in servicenow_username
+
+#### `midserver_java_heap_max`
+
+Optional.
+
+Data type: Integer.
+
+Specifies the maximum size the heap of the JVM process running your MID Server can grow to
+
+Default: 1024
+
+#### `midserver_max_threads`
+
+Optional.
+
+Data type: Integer
+
+Specifies a maximum number of threads your MID Server can handle at once
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc. If there are Known Issues, you might want to include them under their own heading here.
+Compatible with Windows Server 2012 R2 and Windows Server 2016.
 
-## Development
-
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+Only handles one MID Server per node

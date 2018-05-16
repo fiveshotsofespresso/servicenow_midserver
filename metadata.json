@@ -6,7 +6,10 @@
   "license": "MIT",
   "source": "https://github.com/fiveshotsofespresso/servicenow_midserver.git",
   "dependencies": [
-
+    {
+      "name": "ianoberst-xml_fragment",
+      "version_requirement": "= 1.0.2"
+    }
   ],
   "operatingsystem_support": [
     {
