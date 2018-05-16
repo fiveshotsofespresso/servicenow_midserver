@@ -5,40 +5,26 @@
 # @example
 #   include servicenow_midserver
 class servicenow_midserver (
-  String $source                   = undef,
-  String $servicenow_username      = undef,
-  String $servicenow_password      = undef,
-  String $drive                    = 'C:/',
-  String $midserver_name           = ::facts['hostname'],
-  Optional[Integer] $java_heap_max = undef,
-  Optional[Integer] $max_threads   = undef,
-  Optional[String] $proxy_host     = undef,
-  Optional[String] $proxy_port     = undef,
-  Optional[String] $proxy_username = undef,
-  Optional[String] $proxy_password = undef,
+  String $midserver_source,
+  String $midserver_name,
+  Optional[Integer] $midserver_java_heap_max,
+  Optional[Integer] $midserver_max_threads,
+  String $root_drive,
+  String $servicenow_username,
+  String $servicenow_password,
+  Optional[String] $proxy_host,
+  Optional[String] $proxy_port,
+  Optional[String] $proxy_username,
+  Optional[String] $proxy_password,
 ) {
 
-  include ::archive
-	$midserver_home = "${drive}/ServiceNow"
+  contain servicenow_midserver::download
+  contain servicenow_midserver::config
+  contain servicenow_midserver::install
+  contain servicenow_midserver::service
 
-  file{$midserver_home:
-    ensure => directory
-  }
-
-  archive{'ServiceNow Midserver Zip':
-    ensure         => present,
-    path           => "${drive}/temp/agent.zip",
-    extract        => true,
-    source         => $source,
-    extract_path   => "${midserver_home}":,
-    creates        => "${midserver_home}/agent",
-    cleanup        => true,
-    allow_insecure => true,
-    require        => File["${midserver_home"],
-    notify         => Service['snc_mid']
-  }
-
-  class{'::servicenow_midserver::config':}
-  -> class{'::servicenow_midserver::install':}
-  ~> class{'::servicenow_midserver::service':}
+  Class['::servicenow_midserver::download']
+  -> Class['::servicenow_midserver::config']
+  -> Class['::servicenow_midserver::install']
+  ~> Class['::servicenow_midserver::service']
 }
