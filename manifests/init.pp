@@ -21,7 +21,5 @@ class servicenow_midserver (
   Class['::servicenow_midserver::download']
   -> Class['::servicenow_midserver::config']
   -> Class['::servicenow_midserver::install']
-  -> Class{'::servicenow_midserver::service':
-    subscribe => Class['::servicenow_midserver::config']
-  }
+  ~> Class['::servicenow_midserver::service']:
 }
