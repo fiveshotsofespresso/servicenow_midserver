@@ -14,7 +14,7 @@
 
 ## Description
 
-This module configures and installs a ServiceNow MID Server on Windows 2012 R2 and Windows 2016 servers
+This Puppet module configures and installs a ServiceNow MID Server on Windows 2012 R2 and Windows 2016 servers
 
 ## Setup
 
