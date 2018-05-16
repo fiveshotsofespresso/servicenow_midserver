@@ -1,9 +1,7 @@
-# A description of what this class does
+# Class: servicenow_midserver  See README.md for documentation.
+# ===========================
 #
-# @summary A short summary of the purpose of this class
 #
-# @example
-#   include servicenow_midserver
 class servicenow_midserver (
   String $midserver_source,
   String $midserver_name,
