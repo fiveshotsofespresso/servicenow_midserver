@@ -7,11 +7,11 @@
 class servicenow_midserver (
   String $midserver_source,
   String $midserver_name,
-  Optional[Integer] $midserver_java_heap_max,
-  Optional[Integer] $midserver_max_threads,
   String $root_drive,
   String $servicenow_username,
   String $servicenow_password,
+  Optional[Integer] $midserver_java_heap_max,
+  Optional[Integer] $midserver_max_threads,
   Optional[String] $proxy_host,
   Optional[String] $proxy_port,
   Optional[String] $proxy_username,
