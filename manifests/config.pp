@@ -40,8 +40,8 @@ class servicenow_midserver::config {
     xpath   => "/parameters/parameter[@name='mid.instance.password']",
     content => {
       attributes => {
-        'value'  => $servicenow_midserver::servicenow_password,
-        'secure' => 'false' # lint:ignore:quoted_booleans
+        'value'   => $servicenow_midserver::servicenow_password,
+        'secure'  => 'false', # lint:ignore:quoted_booleans
         'encrypt' => 'false' # lint:ignore:quoted_booleans
       },
     },
