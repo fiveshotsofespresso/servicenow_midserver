@@ -15,7 +15,7 @@ class servicenow_midserver::install {
     path           => "${servicenow_midserver::midserver_install_dir}agent.zip",
     extract        => true,
     source         => $servicenow_midserver::midserver_source,
-    extract_path   => $servicenow_midserver::midserver_install_dir,
+    extract_path   => "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}",
     creates        => "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}/agent",
     cleanup        => true,
     allow_insecure => true,
