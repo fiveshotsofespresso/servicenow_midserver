@@ -10,6 +10,11 @@ class servicenow_midserver::install {
     ensure => directory
   }
 
+  file{ "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}":
+    ensure  => directory,
+    require => File[$servicenow_midserver::midserver_install_dir]
+  }
+
   archive{'ServiceNow Midserver Zip':
     ensure         => present,
     path           => "${servicenow_midserver::midserver_install_dir}agent.zip",

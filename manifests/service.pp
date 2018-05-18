@@ -4,11 +4,19 @@
 #
 class servicenow_midserver::service {
 
-  exec {'Initiate ServiceNow Midserver':
-    command  => 'cmd.exe /c .\start.bat',
-    cwd      => "${servicenow_midserver::midserver_install_dir}/${servicenow_midserver::midserver_name}/agent",
-    unless   => 'if(Get-Service snc_mid) { exit 0 } else { exit 1 }',
-    provider => 'powershell',
+  if $facts['os']['family'] == 'Windows'{
+    exec {'Initiate ServiceNow Midserver':
+      command  => 'cmd.exe /c .\start.bat',
+      cwd      => "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}/agent",
+      unless   => 'if(Get-Service snc_mid) { exit 0 } else { exit 1 }',
+      provider => 'powershell',
+    }
+  } else {
+    exec {'Initiate ServiceNow Midserver':
+      command => '.\start.sh',
+      cwd     => "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}/agent/bin",
+      unless  => 'service snc_mid status'
+    }
   }
 
   service{'snc_mid':
