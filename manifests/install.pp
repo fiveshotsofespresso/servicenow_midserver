@@ -2,7 +2,7 @@
 # ===========================
 #
 #
-class servicenow_midserver::download {
+class servicenow_midserver::install {
 
   include ::archive
 

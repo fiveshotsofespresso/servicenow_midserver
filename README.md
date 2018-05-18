@@ -62,7 +62,7 @@ class { 'servicenow_midserver':
 
 #### Private classes
 
-* servicenow_midserver::download: Handles downloading the MID Server ZIP and extracting it to the right location.
+* servicenow_midserver::install: Handles downloading the MID Server ZIP and extracting it to the right location.
 * servicenow_midserver::config: Handles the MID Server configuration file.
 * servicenow_midserver::service: Handles the MID Server service.
 
