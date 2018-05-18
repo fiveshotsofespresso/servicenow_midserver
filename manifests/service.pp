@@ -15,7 +15,8 @@ class servicenow_midserver::service {
     exec {'Initiate ServiceNow Midserver':
       command => '.\start.sh',
       cwd     => "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}/agent/bin",
-      unless  => 'service snc_mid status;'
+      path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin:/opt/local/bin',
+      unless  => 'service snc_mid status'
     }
   }
 
