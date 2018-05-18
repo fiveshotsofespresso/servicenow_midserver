@@ -31,7 +31,7 @@ class { 'servicenow_midserver':
   root_drive          => 'D:',
   servicenow_username => 'foo',
   servicenow_password => 'bar',
-  servicenow_url      => 'https://myinstance.service-now.com/'
+  servicenow_url      => 'https://myinstance.service-now.com/',
 }
 ```
 
@@ -86,7 +86,7 @@ Data type: String
 
 Specifies the desired MID Server name
 
-#### `root_drive`
+#### `midserver_install_dir`
 
 Required.
 

@@ -5,7 +5,7 @@
 class servicenow_midserver (
   String $midserver_source,
   String $midserver_name,
-  String $root_drive,
+  String $midserver_install_dir,
   String $servicenow_url,
   String $servicenow_username,
   String $servicenow_password,
