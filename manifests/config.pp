@@ -7,7 +7,7 @@ class servicenow_midserver::config {
   # The following xml_fragment resources manipulate the config.xml file. 
   # [Future Enhancement] If Augeas ever becomes available for Windows...
 
-  $config_home = "${servicenow_midserver::root_drive}/ServiceNow/agent"
+  $config_home = "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}/agent"
 
   xml_fragment { 'ServiceNow Instance URL':
     ensure  => 'present',

@@ -1,6 +1,6 @@
 {
   "name": "fiveshotsofespresso-servicenow_midserver",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": "Colin Mueller",
   "summary": "Installs and configures a ServiceNow MID Server",
   "license": "MIT",

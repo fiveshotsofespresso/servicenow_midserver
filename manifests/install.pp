@@ -12,11 +12,11 @@ class servicenow_midserver::install {
 
   archive{'ServiceNow Midserver Zip':
     ensure         => present,
-    path           => "${servicenow_midserver::midserver_install_dir}/temp/agent.zip",
+    path           => "${servicenow_midserver::midserver_install_dir}agent.zip",
     extract        => true,
     source         => $servicenow_midserver::midserver_install_dir,
     extract_path   => $servicenow_midserver::midserver_install_dir,
-    creates        => "${servicenow_midserver::midserver_install_dir}/${servicenow_midserver::midserver_name}/agent",
+    creates        => "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}/agent",
     cleanup        => true,
     allow_insecure => true,
     require        => File[$servicenow_midserver::midserver_install_dir],
