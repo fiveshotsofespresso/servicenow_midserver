@@ -11,17 +11,24 @@ class servicenow_midserver::service {
       unless   => 'if(Get-Service snc_mid) { exit 0 } else { exit 1 }',
       provider => 'powershell',
     }
+
+    service{'snc_mid':
+      ensure => running
+    }
+
   } else {
     exec {'Initiate ServiceNow Midserver':
-      command => '.\start.sh',
+      command => '.\mid.sh install',
       cwd     => "${servicenow_midserver::midserver_install_dir}${servicenow_midserver::midserver_name}/agent/bin",
       path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin:/opt/local/bin',
-      unless  => 'service snc_mid status'
+      unless  => 'service mid status'
+    }
+
+    service{'mid':
+      ensure => running
     }
   }
 
-  service{'snc_mid':
-    ensure => running
-  }
+
 
 }
