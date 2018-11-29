@@ -1,6 +1,6 @@
 # Example usage:
 # pdk bundle exec rake spec_prep
-# bolt plan run servicenow_midserver::acceptance::service --modulepath ./spec/fixtures/modules  --no-ssl  
+# bolt plan run servicenow_midserver::acceptance::service_spec --modulepath ./spec/fixtures/modules  --no-ssl  
 
 plan servicenow_midserver::acceptance::service_spec (
   Optional[String[3]] $workspace_dir = '/tmp',
@@ -24,8 +24,8 @@ plan servicenow_midserver::acceptance::service_spec (
       midserver_max_threads   => undef,
     }
   }
-  $results = run_task('servicenow_midserver::acceptance_service_status', $target, '_catch_errors' => true)
-  
+  $results = run_task('servicenow_midserver::acceptance_service_status', $target, '_catch_errors' => true , 'service_name' => 'snc_mid' )
+ 
   # Destroy the target test vm using the helper
   run_plan('servicenow_midserver::acceptance::acceptance_helper', 'workspace_dir' => $workspace_dir, 'task' => 'destroy_target')
 
