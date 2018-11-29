@@ -1,6 +1,8 @@
-# Example usage:
-# pdk bundle exec rake spec_prep
-# bolt plan run servicenow_midserver::acceptance::service --modulepath ./spec/fixtures/--no-ssl  
+# Helper for use with acceptance test plans
+# Usage:
+# To get the target created as part of an acceptance test, add the following like to your acceptance test plan:
+# $target = run_plan('<module_name>::acceptance::acceptance_helper', 'workspace_dir' => '/tmp', 'task' => 'create_target')
+
 
 plan servicenow_midserver::acceptance::acceptance_helper (
   Enum['create_target','destroy_target']$task,
@@ -14,10 +16,10 @@ plan servicenow_midserver::acceptance::acceptance_helper (
   Optional[String[1]] $vagrant_synced_folder     = 'c:\\vagrant',
   Optional[Boltlib::TargetSpec] $controller      = get_targets('localhost')[0],
   String $puppet_agent_msi_url                   = "https://downloads.puppetlabs.com/windows/puppet5/puppet-agent-${puppet_agent_version}-x64.msi",
-  String $puppet_agent_msi_src                   = "c:\\Windows\\Temp\\puppet-agent-${puppet_agent_version}-x64.msi"
+  String $puppet_agent_msi_src                   = "c:\\Windows\\Temp\\puppet-agent-${puppet_agent_version}-x64.msi",
 ) {
 
-  $vagrant_workspace_dir = "${workspace_dir}/${plan}"
+  $vagrant_workspace_dir = "${workspace_dir}/puppet_acceptance"
   
   case $task {
     'create_target': {
