@@ -54,7 +54,7 @@ plan servicenow_midserver::acceptance::acceptance_helper (
     }
 
     'destroy_target': {
-      run_command("cd ${vagrant_workspace_dir} j vagrant destroy -f ${vagrant_target}", $controller, '_catch_errors' => true)
+      run_command("cd ${vagrant_workspace_dir} ; vagrant destroy -f ${vagrant_target}", $controller, '_catch_errors' => true)
       apply($controller) { 
         file { "${vagrant_workspace_dir}": ensure => absent } 
       }
