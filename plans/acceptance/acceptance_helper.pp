@@ -13,14 +13,12 @@ plan servicenow_midserver::acceptance::acceptance_helper (
   Optional[String[3]] $vagrant_target_modulepath = '/tmp/${title}',
   Optional[String[1]] $puppet_agent_version      = '5.5.6',
   Optional[String[1]] $puppet_master_server      = 'puppet',
-  Optional[String[1]] $vagrant_synced_folder     = 'c:\\vagrant',
   Optional[Boltlib::TargetSpec] $controller      = get_targets('localhost')[0],
   String $puppet_agent_msi_url                   = "https://downloads.puppetlabs.com/windows/puppet5/puppet-agent-${puppet_agent_version}-x64.msi",
   String $puppet_agent_msi_src                   = "c:\\Windows\\Temp\\puppet-agent-${puppet_agent_version}-x64.msi",
 ) {
 
   $vagrant_workspace_dir = "${workspace_dir}/puppet_acceptance"
-  
   case $task {
     'create_target': {
       $install_pe_agent_win = [
@@ -28,7 +26,7 @@ plan servicenow_midserver::acceptance::acceptance_helper (
           "; \$PROC = [System.Diagnostics.Process]::Start(\'C:\\Windows\\System32\\msiexec.exe\', \'/qn /i ",
           "${puppet_agent_msi_src} PUPPET_MASTER_SERVER=${puppet_master_server} PUPPET_AGENT_STARTUP_MODE=disabled\') ; \$PROC.WaitForExit()",
       ].join('')
-      apply($controller) { 
+      apply($controller) {
         file { "${vagrant_workspace_dir}": ensure => directory, purge => true } 
         file { "${vagrant_workspace_dir}/Vagrantfile": 
           content => @("EOF")
@@ -57,6 +55,9 @@ plan servicenow_midserver::acceptance::acceptance_helper (
 
     'destroy_target': {
       run_command("cd ${vagrant_workspace_dir} j vagrant destroy -f ${vagrant_target}", $controller, '_catch_errors' => true)
+      apply($controller) { 
+        file { "${vagrant_workspace_dir}": ensure => absent } 
+      }
     }
   }
 }
