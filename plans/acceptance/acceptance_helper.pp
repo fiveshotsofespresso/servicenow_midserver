@@ -49,14 +49,14 @@ plan servicenow_midserver::acceptance::acceptance_helper (
           | EOF
         }
       }
-      run_command("cd ${vagrant_workspace_dir} && vagrant up ${vagrant_target}", $controller, '_catch_errors' => true)
+      run_command("cd ${vagrant_workspace_dir} ; vagrant up ${vagrant_target}", $controller, '_catch_errors' => true)
       $target = get_targets("winrm://vagrant:vagrant@${vagrant_target_ip}")[0]
       run_command("${install_pe_agent_win}", $target, '_catch_errors' => true)
       return $target
     }
 
     'destroy_target': {
-      run_command("cd ${vagrant_workspace_dir} && vagrant destroy -f ${vagrant_target}", $controller, '_catch_errors' => true)
+      run_command("cd ${vagrant_workspace_dir} j vagrant destroy -f ${vagrant_target}", $controller, '_catch_errors' => true)
     }
   }
 }
