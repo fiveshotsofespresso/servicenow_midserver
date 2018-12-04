@@ -71,19 +71,16 @@ Gemfile:
         condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')"
 EOM
   end
+end
 
-  # pdk bundle exec rake spec_prep
-# bolt plan run servicenow_midserver::acceptance::service --modulepath ./spec/fixtures/  --no-ssl  
-
-  task :acceptance do
-    Rake::Task['spec_prep'].invoke
-    modulename = JSON.load(File.read('metadata.json'))['name'].split('-').last
-    specs = Dir.glob("plans/acceptance/*_spec.pp") {|spec| 
-      plan = "#{spec.split('/').last.split('.pp').first}"
-      exec_plan = "bolt plan run #{modulename}::acceptance::#{plan} --modulepath #{Dir.pwd}/spec/fixtures/modules --no-ssl"
-      puts "Executing: #{exec_plan}"
-      sh exec_plan
-    }
-  end
+task :acceptance do
+  Rake::Task['spec_prep'].invoke
+  modulename = JSON.load(File.read('metadata.json'))['name'].split('-').last
+  specs = Dir.glob("plans/acceptance/*_spec.pp") {|spec| 
+    plan = "#{spec.split('/').last.split('.pp').first}"
+    exec_plan = "bolt plan run #{modulename}::acceptance::#{plan} --modulepath #{Dir.pwd}/spec/fixtures/modules --no-ssl"
+    puts "Executing: #{exec_plan}"
+    sh exec_plan
+  }
 end
 
