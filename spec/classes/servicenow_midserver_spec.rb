@@ -8,7 +8,7 @@ describe 'servicenow_midserver' do
         {
           'midserver_source'         => 'https://packages.localhost/servicenow/mid_server/agent.zip',
           'midserver_name'           => 'midserver99',
-          'root_drive'               => 'c:',
+          'midserver_home'           => 'c:/ServiceNow',
           'servicenow_url'           => 'https://midserver_instance.local',
           'servicenow_username'      => 'user',
           'servicenow_password'      => 'pass',

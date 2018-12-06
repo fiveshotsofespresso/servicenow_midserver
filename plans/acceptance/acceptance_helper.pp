@@ -10,7 +10,6 @@ plan servicenow_midserver::acceptance::acceptance_helper (
   Optional[String[1]] $vagrant_target            = 'testvm',
   Optional[String[7]] $vagrant_target_ip         = '10.10.10.10',
   Optional[String[3]] $vagrant_target_hostname   = 'testvm',
-  Optional[String[3]] $vagrant_target_modulepath = '/tmp/${title}',
   Optional[String[1]] $puppet_agent_version      = '5.5.6',
   Optional[String[1]] $puppet_master_server      = 'puppet',
   Optional[Boltlib::TargetSpec] $controller      = get_targets('localhost')[0],
@@ -42,6 +41,8 @@ plan servicenow_midserver::acceptance::acceptance_helper (
                 node.vm.network :private_network, :ip => '${vagrant_target_ip}'
                 node.vm.guest = :windows
                 node.vm.communicator = "winrm"
+                node.vm.provision "shell", inline: "Set-Item WSMan:\\localhost\\Shell\\MaxMemoryPerShellMB 2048"
+                node.vm.provision "shell", inline: "Start-PSJob \'sleep 1 ; Get-Service WinRM | Restart-Service -Force\'"
               end
             end
           | EOF

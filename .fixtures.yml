@@ -18,3 +18,6 @@ fixtures:
     powershell:
       repo: 'puppetlabs/powershell'
       ref: '2.2.0'
+    registry:
+      repo: 'puppetlabs/registry'
+      ref: '2.1.0'
