@@ -6,12 +6,11 @@ describe 'servicenow_midserver' do
     context "on #{os}" do
       let(:params) { 
         {
-          'midserver_source'         => 'https://packages.localhost/servicenow/mid_server/agent.zip',
-          'midserver_name'           => 'midserver99',
-          'midserver_home'           => 'c:/ServiceNow',
-          'servicenow_url'           => 'https://midserver_instance.local',
-          'servicenow_username'      => 'user',
-          'servicenow_password'      => 'pass',
+          'package_source'         => 'https://packages.localhost/servicenow/mid_server/agent.zip',
+          'package_name'           => 'servicenow-midserver-kingston',
+          'package_version'        => '1.6.1',
+          'midserver_home'         => 'c:/ServiceNow',
+          'xml_fragments'          => {},
         }
       }
       let(:facts) { os_facts }
@@ -21,4 +20,6 @@ describe 'servicenow_midserver' do
     end
   end
 end
+
+
 
