@@ -73,7 +73,8 @@ EOM
   end
 end
 
-# Via bolt:
+
+desc 'acceptance_with_bolt'
 task :acceptance_with_bolt do
   Rake::Task['spec_prep'].invoke
   modulename = JSON.load(File.read('metadata.json'))['name'].split('-').last
@@ -85,7 +86,7 @@ task :acceptance_with_bolt do
   }
 end
 
-# Via puppet apply
+desc 'acceptance_with_puppet_apply_and_vagrant'
 task :acceptance_with_puppet_apply do
 
   Rake::Task['spec_prep'].invoke
@@ -94,9 +95,9 @@ task :acceptance_with_puppet_apply do
   Dir.glob("tests/*_test.pp") {|test| 
     
     puts "Executing #{test}"
-    system({"FACTER_action"=>"create_vm"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
+    system({"FACTER_action"=>"create_vm","FACTER_modulepath"=>"#{modulepath}"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
     system({"FACTER_modulepath"=>"#{modulepath}"}, "puppet apply #{test} --modulepath=#{modulepath}")
-    system({"FACTER_action"=>"destroy_vm"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
+    system({"FACTER_action"=>"destroy_vm", "FACTER_modulepath"=>"#{modulepath}"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
   }
 end
 

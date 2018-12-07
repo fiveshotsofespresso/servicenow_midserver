@@ -1,0 +1,59 @@
+---
+servicenow_midserver::xml_fragments:
+  'ServiceNow Midserver Name':
+    xpath: "/parameters/parameter[@name='name']"
+    content:
+      attributes:
+        name: 'name'
+        value: "Discovery_MID2222"
+  'ServiceNow Instance URL':
+    xpath: "/parameters/parameter[@name='url']"
+    content:
+      attributes:
+        name: 'url'
+        value: 'https://myinstance.service-now.com/'
+  'ServiceNow Midserver Username':
+    xpath: "/parameters/parameter[@name='mid.instance.username']"
+    content:
+      attributes:
+        name: 'mid.instance.username'
+        value: 'miduser'
+  'ServiceNow Midserver Password':
+      xpath: "/parameters/parameter[@name='mid.instance.password']"
+      content:
+        attributes:
+          name: 'mid.instance.password'
+          value: 'dummypassword'
+          secure: false # lint:ignore:quoted_booleans
+          encrypt: true # lint:ignore:quoted_booleans
+          noop: true
+  'ServiceNow Midserver Use Proxy':
+    xpath: "/parameters/parameter[@name='mid.proxy.use_proxy']"
+    content:
+      attributes:
+        name: 'mid.proxy.use_proxy'
+        value: 'true'
+  'ServiceNow Midserver Proxy Host':
+    xpath: "/parameters/parameter[@name='mid.proxy.host']"
+    content:
+      attributes:
+        name: 'mid.proxy.host'  
+        value: 'proxyhost.local'
+  'ServiceNow Midserver Proxy Port':
+    xpath: "/parameters/parameter[@name='mid.proxy.port']"
+    content:
+      attributes:
+        name: 'mid.proxy.port'
+        value: '9999'
+  'ServiceNow Midserver Proxy Username':
+    xpath: "/parameters/parameter[@name='mid.proxy.username']"
+    content:
+      attributes:
+        name: 'mid.proxy.username'
+        value: 'proxyuser'
+  'ServiceNow Midserver Proxy Password':
+    xpath: "/parameters/parameter[@name='mid.proxy.password']"
+    content:
+      attributes:
+        name: 'mid.proxy.password'
+        value: '99dummypassword99'
