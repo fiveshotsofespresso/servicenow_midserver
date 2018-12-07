@@ -25,7 +25,8 @@ plan servicenow_midserver::acceptance::acceptance_helper (
           "; \$PROC = [System.Diagnostics.Process]::Start(\'C:\\Windows\\System32\\msiexec.exe\', \'/qn /i ",
           "${puppet_agent_msi_src} PUPPET_MASTER_SERVER=${puppet_master_server} PUPPET_AGENT_STARTUP_MODE=disabled\') ; \$PROC.WaitForExit()",
       ].join('')
-      apply($controller) {
+      apply($controller, _run_as => root ) {
+        #package {'inspec': ensure => installed, source => 'https://packages.chef.io/files/stable/inspec/3.0.64/mac_os_x/10.14/inspec-3.0.64-1.dmg' }
         file { "${vagrant_workspace_dir}": ensure => directory, purge => true } 
         file { "${vagrant_workspace_dir}/Vagrantfile": 
           content => @("EOF")

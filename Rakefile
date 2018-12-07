@@ -73,7 +73,8 @@ EOM
   end
 end
 
-task :acceptance do
+# Via bolt:
+task :acceptance_with_bolt do
   Rake::Task['spec_prep'].invoke
   modulename = JSON.load(File.read('metadata.json'))['name'].split('-').last
   specs = Dir.glob("plans/acceptance/*_spec.pp") {|spec| 
@@ -81,6 +82,21 @@ task :acceptance do
     exec_plan = "bolt plan run #{modulename}::acceptance::#{plan} --modulepath #{Dir.pwd}/spec/fixtures/modules --no-ssl"
     puts "Executing: #{exec_plan}"
     sh exec_plan
+  }
+end
+
+# Via puppet apply
+task :acceptance_with_puppet_apply do
+
+  Rake::Task['spec_prep'].invoke
+  modulename = JSON.load(File.read('metadata.json'))['name'].split('-').last
+  modulepath = "#{Dir.pwd}/spec/fixtures/modules"
+  Dir.glob("tests/*_test.pp") {|test| 
+    
+    puts "Executing #{test}"
+    system({"FACTER_action"=>"create_vm"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
+    system({"FACTER_modulepath"=>"#{modulepath}"}, "puppet apply #{test} --modulepath=#{modulepath}")
+    system({"FACTER_action"=>"destroy_vm"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
   }
 end
 

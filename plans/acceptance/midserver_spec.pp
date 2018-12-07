@@ -5,7 +5,7 @@
 # OR from PDK:
 # pdk bundle exec rake acceptance
 
-plan servicenow_midserver::acceptance::service_spec (
+plan servicenow_midserver::acceptance::midserver_spec (
   Optional[String[3]] $workspace_dir = '/tmp',
 ) {
 
@@ -33,13 +33,8 @@ plan servicenow_midserver::acceptance::service_spec (
       package_name            => 'servicenow-midserver-kingston',
       package_version         => '1.6.1',
       package_source          => 'https://som2.som.nats.co.uk/som4dml/data/DML000084/servicenow-midserver-kingston.1.6.1.nupkg',
-      midserver_name          => 'Discovery_MID1',
       midserver_home          => 'c:/ServiceNow',
-      servicenow_username     => 'foo',
-      servicenow_password     => 'bar',
-      servicenow_url          => 'https://myinstance.service-now.com/',
-      midserver_java_heap_max => undef,
-      midserver_max_threads   => undef,
+      xml_fragments           => lookup('servicenow_midserver::xml_fragments'),
     }
   }
   $results = run_task('servicenow_midserver::acceptance_service_status', $target, '_catch_errors' => true , 'service_name' => 'snc_mid' )
