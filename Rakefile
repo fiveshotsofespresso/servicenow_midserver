@@ -87,17 +87,17 @@ task :acceptance_with_bolt do
 end
 
 desc 'acceptance_with_puppet_apply_and_vagrant'
-task :acceptance_with_puppet_apply do
-
+task :acceptance_with_vagrant do
   Rake::Task['spec_prep'].invoke
   modulename = JSON.load(File.read('metadata.json'))['name'].split('-').last
-  modulepath = "#{Dir.pwd}/spec/fixtures/modules"
+  cwd        = "#{Dir.pwd}"
+  modulepath = "#{cwd}/spec/fixtures/modules"
+  apply_helper = "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}"
   Dir.glob("tests/*_test.pp") {|test| 
-    
     puts "Executing #{test}"
-    system({"FACTER_action"=>"create_vm","FACTER_modulepath"=>"#{modulepath}"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
-    system({"FACTER_modulepath"=>"#{modulepath}"}, "puppet apply #{test} --modulepath=#{modulepath}")
-    system({"FACTER_action"=>"destroy_vm", "FACTER_modulepath"=>"#{modulepath}"}, "puppet apply #{Dir.pwd}/tests/acceptance_helper.pp --modulepath=#{modulepath}")
+    system({"FACTER_action"=>"create_vm","FACTER_cwd"=>"#{cwd}","FACTER_test"=>"#{modulename}/#{test}"}, apply_helper)
+    system({"FACTER_action"=>"test",     "FACTER_cwd"=>"#{cwd}","FACTER_test"=>"#{modulename}/#{test}"}, apply_helper)
+    system({"FACTER_action"=>"destroy_vm","FACTER_cwd"=>"#{cwd}","FACTER_test"=>"#{modulename}/#{test}"}, apply_helper)
   }
 end
 
