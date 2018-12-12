@@ -2,7 +2,14 @@
 #
 # Facts specified here will override the values provided by rspec-puppet-facts.
 ---
-concat_basedir: "/tmp"
-ipaddress: "172.16.254.254"
-is_pe: false
-macaddress: "AA:AA:AA:AA:AA:AA"
+archive_windir: 'c:\\staging'
+servicenow_midserver::package_source: 'https://packages.localhost/servicenow/mid_server/agent.zip'
+servicenow_midserver::service_name: 'midserver99'
+servicenow_midserver::midserver_home: 'c:'
+servicenow_midserver::servicenow_url: 'https://midserver_instance.local'
+servicenow_midserver::xml_fragments: {}
+servicenow_midserver::midserver_home: 'c:/servicenow'
+servicenow_midserver::chocolatey_source: 'c:/tmp/choco'
+servicenow_midserver::package_name: 'midserver'
+servicenow_midserver::package_version: '1.6.1'
+servicenow_midserver::service_display_name: 'midserver'

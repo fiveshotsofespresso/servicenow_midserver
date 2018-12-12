@@ -5,23 +5,26 @@
 class servicenow_midserver::install {
 
   include ::archive
-
-  $midserver_home = "${servicenow_midserver::root_drive}/ServiceNow"
-
-  file{ $midserver_home:
-    ensure => directory
+ 
+  if $servicenow_midserver::package_source {
+    $package_version = 'installed'
+    file {  "${servicenow_midserver::chocolatey_source}/${servicenow_midserver::package_name}-${servicenow_midserver::package_version}.nupkg":
+      ensure  => present,
+      source  => $servicenow_midserver::package_source,
+      before  => Package[$servicenow_midserver::package_name]
+     }
+  } else {
+    $package_version = $servicenow_midserver::package_version 
   }
 
-  archive{'ServiceNow Midserver Zip':
-    ensure         => present,
-    path           => "${servicenow_midserver::root_drive}/temp/agent.zip",
-    extract        => true,
-    source         => $servicenow_midserver::midserver_source,
-    extract_path   => $midserver_home,
-    creates        => "${midserver_home}/agent",
-    cleanup        => true,
-    allow_insecure => true,
-    require        => File[$midserver_home],
-  }
+  $install_options = sprintf('--params " /installPath:""%s"" /name:""%s"" /displayName:""%s"" "',
+    $servicenow_midserver::midserver_home,
+    $servicenow_midserver::service_name,
+    $servicenow_midserver::service_display_name).split(' ')
 
+  package { $servicenow_midserver::package_name:
+    ensure          => $package_version,
+    provider        => chocolatey,
+    install_options => $install_options,
+  }
 }

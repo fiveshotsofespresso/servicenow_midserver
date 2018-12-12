@@ -1,0 +1,11 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "Acceptance test for the midserver service",
+  "parameters": {
+    "service_name": {
+      "description": "service_name",
+      "type": "String[1]"
+    }
+  }
+} 

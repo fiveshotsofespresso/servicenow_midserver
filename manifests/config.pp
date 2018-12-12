@@ -2,79 +2,22 @@
 # ===========================
 #
 #
-class servicenow_midserver::config {
-
+class servicenow_midserver::config (
+  Hash $xml_fragments = $servicenow_midserver::xml_fragments,
+  String $midserver_home = $servicenow_midserver::midserver_home
+) {
   # The following xml_fragment resources manipulate the config.xml file. 
   # [Future Enhancement] If Augeas ever becomes available for Windows...
 
-  $config_home = "${servicenow_midserver::root_drive}/ServiceNow/agent"
-
-  xml_fragment { 'ServiceNow Instance URL':
-    ensure  => 'present',
-    path    => "${config_home}/config.xml",
-    xpath   => "/parameters/parameter[@name='url']",
-    content => {
-      attributes => {
-        'value' => $servicenow_midserver::servicenow_url,
-      },
-    },
+  $xml_fragment_defaults = {
+    ensure => present,
+    path   => "${midserver_home}/config.xml",
   }
 
-  xml_fragment { 'ServiceNow Midserver Username':
-    ensure  => 'present',
-    path    => "${config_home}/config.xml",
-    xpath   => "/parameters/parameter[@name='mid.instance.username']",
-    content => {
-      attributes => {
-        'value' => $servicenow_midserver::servicenow_username,
-      },
-    },
-  }
-
-  # We can't allow encryption of the password on the MID Server itself or the file will be changed every run, restarting the MID midserver
-  # Password is encrypted Puppet side using EYAML
-
-  xml_fragment { 'ServiceNow Midserver Password':
-    ensure  => 'present',
-    path    => "${config_home}/config.xml",
-    xpath   => "/parameters/parameter[@name='mid.instance.password']",
-    content => {
-      attributes => {
-        'value'   => $servicenow_midserver::servicenow_password,
-        'secure'  => 'false', # lint:ignore:quoted_booleans
-        'encrypt' => 'false' # lint:ignore:quoted_booleans
-      },
-    },
-  }
-
-  xml_fragment { 'ServiceNow Midserver Name':
-    ensure  => 'present',
-    path    => "${config_home}/config.xml",
-    xpath   => "/parameters/parameter[@name='name']",
-    content => {
-      attributes => {
-        'value' => $servicenow_midserver::midserver_name,
-      },
-    },
-  }
-  if($servicenow_midserver::midserver_max_threads){
-    xml_fragment { 'ServiceNow Max Threads':
-      ensure  => 'present',
-      path    => "${config_home}/config.xml",
-      xpath   => "/parameters/parameter[@name='threads.max']",
-      content => {
-        attributes => {
-          'value' => $servicenow_midserver::midserver_max_threads,
-        },
-      },
-    }
-  }
-
-  if($servicenow_midserver::midserver_java_heap_max){
-    file_line { 'Set Java heap max':
-      ensure => present,
-      path   => "${config_home}/conf/wrapper-override.conf",
-      line   => "wrapper.java.maxmemory=${servicenow_midserver::midserver_java_heap_max}",
+  $xml_fragments.each |String $xml_fragment, Hash $attributes| {
+    Resource['xml_fragment'] {
+      $xml_fragment: * => $attributes;
+      default:  * => $xml_fragment_defaults;
     }
   }
 }

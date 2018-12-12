@@ -3,4 +3,21 @@
 ---
 fixtures:
   forge_modules:
-     xml_fragment: "ianoberst/xml_fragment"
+    xml_fragment: 
+      repo: 'ianoberst/xml_fragment'
+      ref: '1.0.2'
+    stdlib:
+      repo: 'puppetlabs/stdlib'
+      ref: '5.1.0'
+    archive:
+      repo: 'puppet/archive'
+      ref: '3.2.1'
+    chocolatey:
+      repo: 'puppetlabs/chocolatey'
+      ref: '3.1.0'
+    powershell:
+      repo: 'puppetlabs/powershell'
+      ref: '2.2.0'
+    registry:
+      repo: 'puppetlabs/registry'
+      ref: '2.1.0'

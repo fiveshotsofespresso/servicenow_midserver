@@ -28,7 +28,7 @@ The servicenow_midserver module requires the [ianoberst-xml_fragment module](htt
 class { 'servicenow_midserver':
   midserver_source    => 'https://install.service-now.com/glide/distribution/builds/package/mid/2018/03/19/mid.istanbul-09-23-2016__patch11a-03-13-2018_03-19-2018_0958.windows.x86-64.zip',
   midserver_name      => 'Discovery_MID1',
-  root_drive          => 'D:',
+  midserver_home      => 'D:/servicenow',
   servicenow_username => 'foo',
   servicenow_password => 'bar',
   servicenow_url      => 'https://myinstance.service-now.com/'
@@ -43,7 +43,7 @@ class { 'servicenow_midserver':
 class { 'servicenow_midserver':
   midserver_source        => 'https://install.service-now.com/glide/distribution/builds/package/mid/2018/03/19/mid.istanbul-09-23-2016__patch11a-03-13-2018_03-19-2018_0958.windows.x86-64.zip',
   midserver_name          => 'Discovery_MID1',
-  root_drive              => 'D:',
+  midserver_home              => 'D:/servicenow',
   servicenow_username     => 'foo',
   servicenow_password     => 'bar',
   servicenow_url          => 'https://myinstance.service-now.com/',
@@ -86,7 +86,7 @@ Data type: String
 
 Specifies the desired MID Server name
 
-#### `root_drive`
+#### `midserver_home`
 
 Required.
 

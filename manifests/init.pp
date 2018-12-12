@@ -3,14 +3,14 @@
 #
 #
 class servicenow_midserver (
-  String $midserver_source,
-  String $midserver_name,
-  String $root_drive,
-  String $servicenow_url,
-  String $servicenow_username,
-  String $servicenow_password,
-  Optional[Integer] $midserver_java_heap_max = undef,
-  Optional[Integer] $midserver_max_threads   = undef
+  Optional[String] $package_source,
+  String $package_name,
+  String $package_version,
+  String $service_name = 'snc_mid',
+  String $service_display_name = 'snc_mid',
+  String $chocolatey_source = 'c:/windows/temp/chocolateysource',
+  String $midserver_home,
+  Hash $xml_fragments,
 ) {
 
   contain servicenow_midserver::install
