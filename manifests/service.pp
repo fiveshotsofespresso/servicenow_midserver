@@ -12,7 +12,9 @@ class servicenow_midserver::service {
   }
 
   service{'snc_mid':
-    ensure => running
+    ensure  => running,
+    enable  => true,
+    require => Exec['Initiate ServiceNow Midserver'],
   }
 
 }
